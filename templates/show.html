@@ -7,11 +7,11 @@
     <h2>{{user.first_name.capitalize()}} {{user.last_name.capitalize()}}</h2>
     <h3>{{user.email}}</h3>
 
-    {% for feedback in user.feedbacks%}
-    <div>
-        <p><b>{{feedback.title}}</b> - {{feedback.content}}</p>
-        <a href="/feedback/{{feedback.id}}/update" class="btn btn-primary">Edit</a>
-        <form action="/feedback/{{feedback.id}}/delete" method="post">
+    {% for feedback in user.feedback%}
+    <div class="mt-4">
+        <p class="displayInline"><b>{{feedback.title}}</b> - {{feedback.content}}</p>
+        <a href="/feedback/{{feedback.id}}/update" class="btn btn-primary displayInline">Edit</a>
+        <form action="/feedback/{{feedback.id}}/delete" class="displayInline" method="post">
             <button class="btn btn-warning">X</button>
         </form>
     </div>
