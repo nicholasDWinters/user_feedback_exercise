@@ -11,8 +11,15 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators = [InputRequired('Email required.'), Email(message='Not a valid email'), Length(max=50, message='Email must be less than 20 characters.')])
 
     first_name = StringField('First Name', validators = [InputRequired('First name required.'), Length(max=30, message='First name must be less than 30 characters.')])
-    
+
     last_name = StringField('Last Name', validators = [InputRequired('Last name required.'), Length(max=30, message='Last name must be less than 30 characters.')])
+
+
+class LoginForm(FlaskForm):
+    '''login form'''
+    username = StringField('Username', validators = [InputRequired('Username required.')])
+
+    password = PasswordField('Password', validators = [InputRequired('Password required.')])
 
 
 

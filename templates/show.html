@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{%block title%} Show Page {%endblock%}
+{%block content%}
+
+<div class="container">
+    <h1>{{user.username}}</h1>
+    <h2>{{user.first_name.capitalize()}} {{user.last_name.capitalize()}}</h2>
+    <h3>{{user.email}}</h3>
+
+    {% for feedback in user.feedbacks%}
+    <div>
+        <p><b>{{feedback.title}}</b> - {{feedback.content}}</p>
+        <a href="/feedback/{{feedback.id}}/update" class="btn btn-primary">Edit</a>
+        <form action="/feedback/{{feedback.id}}/delete" method="post">
+            <button class="btn btn-warning">X</button>
+        </form>
+    </div>
+
+    {%endfor%}
+    <a class='btn btn-success mt-4' href="/users/{{user.username}}/feedback/add">Add Feedback</a>
+    <form class="mt-4" action="/users/{{user.username}}/delete" method="post">
+        <button class="btn btn-danger">Delete User</button>
+    </form>
+    <a class='btn btn-primary mt-4' href="/logout">Logout</a>
+</div>
+{%endblock%}
