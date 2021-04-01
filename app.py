@@ -41,6 +41,7 @@ def register():
         try:
             db.session.commit()
         except:
+            db.session.rollback()
             form.username.errors.append('Username or email taken.')
             return render_template('register.html', form=form)
 
@@ -137,6 +138,7 @@ def add_feedback(username):
             return redirect(f'/users/{user.username}')
     return render_template('add_feedback.html', user = user, form = form)
 
+
 @app.route('/feedback/<int:id>/update', methods=["GET", "POST"])
 def edit_feedback(id):
     '''update a specific feedback'''
@@ -154,5 +156,16 @@ def edit_feedback(id):
 
     return render_template('edit_feedback.html', feedback = feedback, form = form)
 
+@app.route('/feedback/<int:id>/delete', methods = ["POST"])
+def delete_feedback(id):
+    '''delete the specified feedback'''
+    feedback = Feedback.query.get_or_404(id)
 
+    if session['username'] == feedback.user.username:
+        db.session.delete(feedback)
+        db.session.commit()
+        return redirect(f"/users/{session['username']}")
+    else:
+        flash('You do not have permission to do that!', 'warning')
+        return redirect('/login')
 
