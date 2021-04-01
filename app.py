@@ -144,7 +144,7 @@ def edit_feedback(id):
     '''update a specific feedback'''
     feedback = Feedback.query.get_or_404(id)
     form = FeedbackForm(obj = feedback)
-    if 'username' not in session:
+    if 'username' not in session or session['username'] != feedback.user.username:
         flash('Do not have permission to edit', 'warning')
         return redirect('/login')
     if form.validate_on_submit():
@@ -155,6 +155,7 @@ def edit_feedback(id):
         return redirect(f"/users/{session['username']}")
 
     return render_template('edit_feedback.html', feedback = feedback, form = form)
+
 
 @app.route('/feedback/<int:id>/delete', methods = ["POST"])
 def delete_feedback(id):
